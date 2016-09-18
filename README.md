@@ -30,3 +30,7 @@ The Stemmer tries to recognise the root of a word, in order to identify slightly
 ###Rater
 The Rater takes the list of words contained in the document, together with any additional information gathered at the previous stages, and returns a list of tags (i.e. words or small units of text) ordered by some idea of "relevance".
 It turns out that just working on the information contained in the document itself is not enough, because it says nothing about the frequency of a term in the language. For this reason, the module consists of analysing a corpus (i.e. a sample of documents written in the same language) to build a dictionary of known words. This is taken care by the build_dict() function. It is advised to build your own dictionaries, and the build_dict_from_nltk() function in the [build_dict.py](https://github.com/P2Pvalue/teem-tag/blob/master/core/build_dict.py) enables you to use the corpora included in NLTK.
+
+###contributors
+[Prastut Kumar](https://github.com/prastut)
+[Fenil Patel](https://github.com/patelfenil)

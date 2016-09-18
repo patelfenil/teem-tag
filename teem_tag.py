@@ -46,16 +46,19 @@ def tags():
         description = data['data']['text']
         name = data['data']['name']
 
+        #Generating tags
         tags = json.dumps(mytagger(data['data']['text'],10), default=lambda x: str(x).strip('"\''))
 
+        #Generating summary of 4 lines
         tt = TextTeaser()
         sentences = tt.summarize(name, description)
         summary = json.dumps(sentences[:4])
 
-        app.logger.info(summary);
+        
        
         #For logs
         app.logger.info(tags)
+        app.logger.info(summary);
         
         post2swellRT(session,wave_id,tags,summary)
         
@@ -92,14 +95,15 @@ def authfromSwellRT():
 
 
 def post2swellRT(session,wave_id,tags,summary):
-    #Making the Update Link
+    #Making the Update Link for tags
     update_link = swellrt + 'object/' + wave_id + '/tags'
     
     try:
         update = session.post(update_link, json=tags)
     except requests.exceptions.RequestException as e:
         app.logger.info('Updating tags to SwellRT failed')
-
+        
+    #Making the Update Link for summary
     summary_update_link = swellrt + 'object/' + wave_id + '/summary'
     
     try:
