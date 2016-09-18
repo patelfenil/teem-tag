@@ -68,6 +68,19 @@ def tags():
         return tags
 
 
+@app.route("/image", methods=['GET', 'POST'])
+def classify_image(image=None):
+
+    if request.method == 'GET':
+        image = "/home/fenil/Pictures/img1.jpg"
+        sys.path.append("/usr/local/lib/python2.7/dist-packages/tensorflow/models/image/imagenet")
+        import classify_image
+        classify_image.maybe_download_and_extract()
+        image_classification = classify_image.run_inference_on_image(image)
+        app.logger.info(image_classification)
+        return 'OK'
+        
+
 
 def authfromSwellRT():
     session = requests.session()
@@ -102,7 +115,7 @@ def post2swellRT(session,wave_id,tags,summary):
         update = session.post(update_link, json=tags)
     except requests.exceptions.RequestException as e:
         app.logger.info('Updating tags to SwellRT failed')
-        
+
     #Making the Update Link for summary
     summary_update_link = swellrt + 'object/' + wave_id + '/summary'
     
